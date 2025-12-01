@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>OSIS SMAN 3 TEBAS</title>
+
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      background:#eef3ff;
+      margin:0;
+      padding:20px;
+      display:flex;
+      justify-content:center;
+    }
+    .container{
+      background:#fff;
+      padding:20px;
+      border-radius:10px;
+      width:100%;
+      max-width:600px;
+      box-shadow:0 4px 14px rgba(0,0,0,0.1);
+    }
+    h1{text-align:center;margin-bottom:4px;}
+    .center-note{
+      margin:15px 0;
+      background:#f3f7ff;
+      padding:10px;
+      border-radius:8px;
+      border:1px dashed #b2c5ff;
+      text-align:center;
+      font-weight:bold;
+    }
+    label{margin-top:10px;display:block;font-weight:bold;}
+    input, textarea, select{
+      width:100%;
+      padding:10px;
+      margin-top:5px;
+      border-radius:6px;
+      border:1px solid #ccd4ff;
+      font-size:14px;
+      box-sizing:border-box;
+    }
+    textarea{min-height:100px;}
+    .radios{margin-top:8px;}
+    .submit-btn{
+      margin-top:15px;
+      width:100%;
+      background:#2b7cff;
+      padding:12px;
+      color:white;
+      border:0;
+      border-radius:8px;
+      font-size:16px;
+      cursor:pointer;
+    }
+    .thankyou{
+      margin-top:15px;
+      display:none;
+      background:#e6fff1;
+      padding:12px;
+      border-radius:8px;
+      color:#0b5c26;
+      font-weight:bold;
+      text-align:center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>OSIS SMAN 3 TEBAS</h1>
+
+    <div class="center-note">
+      Berikan saran dan masukan untuk OSIS SMAN 3 Tebas
+    </div>
+
+    <form id="saranForm">
+
+      <label>Nama</label>
+      <input type="text" id="nama" required />
+
+      <label>Kelas</label>
+      <input type="text" id="kelas" required />
+
+      <label>Saran dan Masukan</label>
+      <textarea id="saran" required></textarea>
+
+      <label>Opsi Kepuasan</label>
+      <div class="radios">
+        <label><input type="radio" name="kepuasan" value="Sangat Tidak Puas" required> Sangat Tidak Puas</label><br>
+        <label><input type="radio" name="kepuasan" value="Tidak Puas"> Tidak Puas</label><br>
+        <label><input type="radio" name="kepuasan" value="Puas"> Puas</label><br>
+        <label><input type="radio" name="kepuasan" value="Sangat Puas"> Sangat Puas</label>
+      </div>
+
+      <button class="submit-btn" type="submit">Kirim</button>
+
+      <div class="thankyou" id="thankyou">
+        Terima kasih! Saran Anda telah dikirim ke OSIS.
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const botToken = '7619730900:AAGdaAJAbTQ9M1emOgTsH97PQALLt1jpGpE';
+    const chatId  = '7327517194';
+
+    document.getElementById('saranForm').addEventListener('submit', async function(e){
+      e.preventDefault();
+
+      const nama = document.getElementById("nama").value.trim();
+      const kelas = document.getElementById("kelas").value.trim();
+      const saran = document.getElementById("saran").value.trim();
+      const kepuasan = document.querySelector('input[name="kepuasan"]:checked')?.value;
+
+      if(!nama || !kelas || !saran || !kepuasan){
+        alert("Semua form wajib diisi!");
+        return;
+      }
+
+      const message =
+`📩 *Saran Baru Masuk*  
+👤 Nama: ${nama}  
+🏫 Kelas: ${kelas}  
+❤️ Kepuasan: ${kepuasan}  
+
+📝 Saran:  
+${saran}`;
+
+      // Kirim ke Telegram
+      await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: message,
+          parse_mode: "Markdown"
+        })
+      });
+
+      document.getElementById('thankyou').style.display = "block";
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>

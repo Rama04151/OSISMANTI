@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard OSIS – Pengumuman</title>
+
+  <!-- Proteksi Dashboard -->
+  <script>
+    if (localStorage.getItem("login_osis") !== "true") {
+        alert("Silakan login terlebih dahulu!");
+        window.location.href = "index5.html";
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #eef5ff;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #0055aa;
+      padding: 15px 20px;
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 750px;
+      margin: 25px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #003d82;
+    }
+
+    input, textarea {
+      width: 97%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin: 8px 0;
+    }
+
+    button {
+      padding: 10px 16px;
+      background: #0055aa;
+      border: none;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+
+    button:hover {
+      background: #003d82;
+    }
+
+    .pengumuman-box {
+      background: #f4f8ff;
+      border: 1px solid #c8d8f0;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 12px;
+      position: relative;
+    }
+
+    .hapus-btn {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      background: #cc0000;
+      padding: 5px 10px;
+      border: none;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .hapus-btn:hover {
+      background: #a00000;
+    }
+
+    .logout-btn {
+      background: #cc0000;
+      float: right;
+      margin-top: -40px;
+      padding: 8px 12px;
+    }
+  </style>
+
+  <script>
+  // Proteksi login → wajib login dulu
+  if (localStorage.getItem("login_osis") !== "true") {
+      alert("Silakan login terlebih dahulu!");
+      window.location.href = "index5.html"; // kembali ke login
+  }
+
+  function loadPengumuman() {
+    const data = JSON.parse(localStorage.getItem("pengumuman_osis")) || [];
+    const list = document.getElementById("listPengumuman");
+    list.innerHTML = "";
+
+    data.forEach((item, index) => {
+      list.innerHTML += `
+        <div class="item-box">
+          <strong>${item.judul}</strong><br>
+          <p>${item.isi}</p>
+          <button onclick="hapus(${index})">Hapus</button>
+        </div>
+      `;
+    });
+  }
+
+  function tambahPengumuman() {
+    const judul = document.getElementById("judul").value;
+    const isi = document.getElementById("isi").value;
+
+    if (judul.trim() === "" || isi.trim() === "") {
+      alert("Judul dan isi wajib diisi!");
+      return;
+    }
+
+    const data = JSON.parse(localStorage.getItem("pengumuman_osis")) || [];
+    data.push({ judul, isi });
+
+    // simpan ke storage
+    localStorage.setItem("pengumuman_osis", JSON.stringify(data));
+
+    alert("Pengumuman berhasil ditambahkan!");
+
+    document.getElementById("judul").value = "";
+    document.getElementById("isi").value = "";
+    loadPengumuman();
+  }
+
+  function hapus(index) {
+    const data = JSON.parse(localStorage.getItem("pengumuman_osis")) || [];
+    data.splice(index, 1);
+    localStorage.setItem("pengumuman_osis", JSON.stringify(data));
+    loadPengumuman();
+  }
+
+  window.onload = loadPengumuman;
+</script>
+
+</head>
+<body>
+
+  <header>
+    Dashboard OSIS
+    <button class="logout-btn" onclick="logoutOSIS()">Logout</button>
+  </header>
+
+  <div class="container">
+    <h2>Tambah Pengumuman</h2>
+
+    <input type="text" id="judul" placeholder="Judul Pengumuman">
+    <textarea id="isi" rows="4" placeholder="Isi Pengumuman"></textarea>
+
+    <button onclick="tambahPengumuman()">Tambahkan</button>
+
+    <h2 style="margin-top: 30px;">Daftar Pengumuman</h2>
+    <div id="listPengumuman"></div>
+  </div>
+
+</body>
+</html>

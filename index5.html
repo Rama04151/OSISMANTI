@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login OSIS SMAN 3 Tebas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #eef6ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-box {
+      background: white;
+      padding: 30px;
+      width: 320px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      text-align: center;
+    }
+
+    .login-box h2 {
+      margin-bottom: 20px;
+      color: #003c80;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      width: 95%;
+      padding: 10px;
+      background: #0055aa;
+      border: none;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #003f80;
+    }
+  </style>
+
+  <script>
+    function loginOSIS() {
+      const user = document.getElementById("username").value;
+      const pw = document.getElementById("password").value;
+
+      const akun = [
+        {u:"darussmanti", p:"smanti123"},
+        {u:"osis03", p:"osis"},
+        {u:"rama", p:"rimut03"}
+      ];
+
+      const cek = akun.find(a => a.u === user && a.p === pw);
+
+      if (cek) {
+        alert("Login Berhasil!");
+        localStorage.setItem("login_osis", "true");   // <-- tanda login
+        window.location.href = "dashboard.html";       // <-- masuk dashboard
+      } else {
+        alert("Username atau password salah!");
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div class="login-box">
+    <h2>Login OSIS</h2>
+
+    <input type="text" id="username" placeholder="Username" required>
+    <input type="password" id="password" placeholder="Password" required>
+
+    <button onclick="loginOSIS()">Login</button>
+  </div>
+</body>
+</html>

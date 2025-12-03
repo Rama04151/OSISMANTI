@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- FIX TAMPILAN DESKTOP → BIAR MOBILE -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Pengumuman OSIS SMAN 3 Tebas</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f6ff;
+      margin: 0;
+      padding: 15px;
+      color: #003366;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 24px;
+    }
+
+    .item-box {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+      margin-bottom: 12px;
+    }
+
+    .item-box strong {
+      font-size: 18px;
+      color: #003399;
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 1.4;
+    }
+  </style>
+
+</head>
+<body>
+
+  <h2>📢 Daftar Pengumuman OSIS</h2>
+
+  <!-- Tempat tampil pengumuman -->
+  <div id="listPengumuman"></div>
+
+  <script>
+    function loadPengumuman() {
+      let data = JSON.parse(localStorage.getItem("pengumuman_osis")) || [];
+      const list = document.getElementById("listPengumuman");
+      list.innerHTML = "";
+
+      if (data.length === 0) {
+        list.innerHTML = "<p><i>Belum ada pengumuman.</i></p>";
+        return;
+      }
+
+      data.forEach(item => {
+        list.innerHTML += `
+          <div class="item-box">
+            <strong>${item.judul}</strong><br>
+            <p>${item.isi}</p>
+          </div>
+        `;
+      });
+    }
+
+    window.onload = loadPengumuman;
+  </script>
+
+</body>
+</html>

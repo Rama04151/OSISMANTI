@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saran & Masukan OSIS</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #eef5ff;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #003399;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #99b3ff;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #003399;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #002266;
+    }
+
+    .back {
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    .back a {
+      color: #003399;
+      font-weight: bold;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Saran & Masukan</h2>
+
+  <label>Nama :</label>
+  <input type="text" id="nama" placeholder="Masukkan nama Anda">
+
+  <label>Kelas :</label>
+  <input type="text" id="kelas" placeholder="Contoh: XI A">
+
+  <label>Saran & Masukan :</label>
+  <textarea id="pesan" rows="4" placeholder="Tulis saran atau masukan..."></textarea>
+
+  <label>Opsi Kepuasan :</label>
+  <select id="kepuasan">
+    <option value="Sangat Tidak Puas">Sangat Tidak Puas</option>
+    <option value="Tidak Puas">Tidak Puas</option>
+    <option value="Puas">Puas</option>
+    <option value="Sangat Puas">Sangat Puas</option>
+  </select>
+
+  <button onclick="kirim()">Kirim</button>
+
+  <div class="back">
+    <a href="index.html">← Kembali ke Beranda</a>
+  </div>
+
+
+  <script>
+    function kirim() {
+      const nama = document.getElementById("nama").value;
+      const kelas = document.getElementById("kelas").value;
+      const pesan = document.getElementById("pesan").value;
+      const kepuasan = document.getElementById("kepuasan").value;
+
+      if (nama.trim() === "" || kelas.trim() === "" || pesan.trim() === "") {
+        alert("Semua data wajib diisi!");
+        return;
+      }
+
+      const botToken = "8544574622:AAEYXyFKPNV9p-KkZytkLPsHY5SnzrPupcE";
+      const chatId = "7327517194";
+
+      const text = 
+        "📩 *Saran & Masukan Baru*\n\n" +
+        "👤 Nama: " + nama + "\n" +
+        "🏫 Kelas: " + kelas + "\n" +
+        "💬 Pesan:\n" + pesan + "\n\n" +
+        "⭐ Kepuasan: " + kepuasan + "\n" +
+        "⏰ Waktu: " + new Date().toLocaleString("id-ID");
+
+      const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+      fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: text,
+          parse_mode: "Markdown",
+        }),
+      })
+      .then(() => {
+        alert("Terima kasih! Saran Anda telah dikirim.");
+        document.getElementById("nama").value = "";
+        document.getElementById("kelas").value = "";
+        document.getElementById("pesan").value = "";
+      })
+      .catch(() => {
+        alert("Gagal mengirim! Periksa koneksi internet.");
+      });
+    }
+  </script>
+
+</body>
+</html>

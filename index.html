@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OSIS SMAN 3 TEBAS</title>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      background: #f2f7ff;
+      color: #003366;
+    }
+
+    /* HEADER */
+    header {
+      background: #004a99;
+      color: white;
+      padding: 12px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-area img {
+      height: 52px;
+    }
+
+    .logo-area h1 {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    /* LOGIN BUTTON */
+    .login-btn {
+      background: white;
+      color: #004a99;
+      padding: 10px 18px;
+      font-weight: bold;
+      border-radius: 6px;
+      border: 0;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .login-btn:hover {
+      background: #e7f0ff;
+    }
+
+    /* DROPDOWN */
+    .dropdown {
+      position: absolute;
+      right: 40px;
+      top: 75px;
+      background: white;
+      width: 160px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      display: none;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    .dropdown a {
+      display: block;
+      padding: 12px;
+      text-align: center;
+      background: #004a99;
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 6px;
+      margin: 8px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 90px 20px;
+      background: linear-gradient(to bottom, #e1efff, #ffffff);
+    }
+
+    .hero h2 {
+      font-size: 44px;
+      margin: 0;
+      color: #003d99;
+      font-weight: 700;
+    }
+
+    .hero p {
+      font-size: 20px;
+      margin-top: 12px;
+      color: #004a99;
+    }
+
+    /* MENU SECTION */
+    .menu-section {
+      display: flex;
+      justify-content: center;
+      gap: 26px;
+      padding: 40px 20px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: white;
+      width: 260px;
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      border-top: 6px solid #005fcc;
+      transition: 0.25s;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.22);
+    }
+  </style>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("dropdownMenu");
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    }
+
+    // Klik di luar dropdown → tutup otomatis
+    document.addEventListener("click", function(e) {
+      if (!e.target.closest(".login-btn")) {
+        document.getElementById("dropdownMenu").style.display = "none";
+      }
+    });
+  </script>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo-area">
+      <img src="logosmanti.png" alt="Logo SMANTI">
+      <h1>OSIS SMAN 3 TEBAS</h1>
+    </div>
+
+    <!-- Dropdown Button -->
+    <button class="login-btn" onclick="toggleMenu()">Login</button>
+
+    <!-- Dropdown List -->
+    <div id="dropdownMenu" class="dropdown">
+      <a href="index5.html">Login OSIS</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h2>C.E.R.M.A.T</h2>
+    <p>Cerdas • Elegan • Rajin • Mandiri • Amanah • Tertib</p>
+  </section>
+
+  <!-- MENU -->
+  <section class="menu-section">
+    <div class="card" onclick="location.href='index2.html'">Pengumuman</div>
+    <div class="card" onclick="location.href='index3.html'">Saran & Masukan</div>
+    <div class="card" onclick="location.href='index4.html'">Hubungi Kami</div>
+  </section>
+
+</body>
+</html>
